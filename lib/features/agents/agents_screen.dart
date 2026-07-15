@@ -14,7 +14,7 @@ class AgentsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final agents = ref.watch(agentsProvider);
-    final nicknames = ref.watch(agentNicknamesProvider).valueOrNull ?? const {};
+    final nicknames = ref.watch(agentNicknamesProvider).value ?? const {};
 
     return Scaffold(
       appBar: AppBar(title: const Text('Agents')),

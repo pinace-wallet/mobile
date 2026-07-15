@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Pinace indexer is served over plain HTTP today; scope the cleartext
+     exception to that host only. Everything else stays HTTPS-only. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false"/>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">54.80.234.72</domain>
+    </domain-config>
+</network-security-config>

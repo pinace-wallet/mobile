@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sui/sui.dart';
 
 import '../features/auth/auth_providers.dart';
+import 'firebase/fcm_service.dart';
 import 'indexer/indexer_client.dart';
 import 'indexer/models.dart';
 import 'indexer/sse_client.dart';
@@ -12,6 +13,12 @@ import 'pinace/pinace_tx_service.dart';
 import 'sui/sui_service.dart';
 
 final indexerProvider = Provider((ref) => IndexerClient());
+
+/// FCM is only usable once Firebase is configured and the user signed in.
+final fcmServiceProvider = Provider<FcmService?>((ref) {
+  final repo = ref.watch(firestoreRepoProvider);
+  return repo == null ? null : FcmService(repo);
+});
 final suiServiceProvider = Provider((ref) => SuiService());
 final pinaceTxProvider =
     Provider((ref) => PinaceTxService(ref.watch(suiServiceProvider)));

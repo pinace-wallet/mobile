@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -39,11 +38,11 @@ final routerProvider = Provider<GoRouter>((ref) {
           location == '/unlock';
 
       if (auth.isLoading) return atGate ? null : '/splash';
-      final user = auth.valueOrNull;
+      final user = auth.value;
       if (user == null) return location == '/login' ? null : '/login';
       if (accounts.isLoading) return atGate ? null : '/splash';
       final hasAccounts =
-          (accounts.valueOrNull?.accounts ?? const []).isNotEmpty;
+          (accounts.value?.accounts ?? const []).isNotEmpty;
       if (!hasAccounts) return location == '/setup' ? null : '/setup';
       if (locked) return location == '/unlock' ? null : '/unlock';
       return atGate ? '/home' : null;

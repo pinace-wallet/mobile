@@ -6,6 +6,7 @@ import '../../core/utils/format.dart';
 import '../../core/widgets/widgets.dart';
 import '../../data/indexer/models.dart';
 import '../../data/providers.dart';
+import '../auth/auth_providers.dart';
 import '../home/home_screen.dart' show EventRow;
 import 'policy_sheet.dart';
 
@@ -80,7 +81,7 @@ class _Header extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nicknames = ref.watch(agentNicknamesProvider).valueOrNull ?? const {};
+    final nicknames = ref.watch(agentNicknamesProvider).value ?? const {};
     final displayName = nicknames[agent.id] ??
         (agent.name == agent.address ? shortenAddress(agent.address) : agent.name);
     final expiry = dateTimeFromEpochMs(agent.expiresMs);

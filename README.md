@@ -1,17 +1,35 @@
-# pinace_wallet
+# Pinace Wallet Mobile
 
-A new Flutter project.
+Flutter Sui wallet for the Pinace agent-delegation protocol (testnet). Mirrors the browser extension (`../Frontend`) and adds Google login (Firebase Auth), biometric unlock, and Slush-style multi-account switching.
 
-## Getting Started
+**Docs:** [AI-Context/](AI-Context/) — requirements, system design, implementation plan, and build walkthrough.
 
-This project is a starting point for a Flutter application.
+## Quick start
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+# One-time Firebase setup (required for Google sign-in / Firestore / FCM):
+dart pub global activate flutterfire_cli
+flutterfire configure        # generates lib/firebase_options.dart + platform files
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+flutter run                  # Android emulator or iOS simulator
+```
+
+Without `flutterfire configure` the app still boots, but the Login screen shows a setup hint and sign-in is disabled.
+
+- Enable the **Google** provider in Firebase Auth; create **Firestore**; add Android **SHA-1/SHA-256** fingerprints (`cd android && ./gradlew signingReport`).
+- Test SUI: https://faucet.sui.io (testnet).
+- Override endpoints: `flutter run --dart-define=INDEXER_URL=... --dart-define=PINACE_PACKAGE_ID=0x...`
+
+## Layout
+
+```
+lib/
+  core/       config, theme (extension design tokens), router (auth gate), shared widgets
+  data/       keystore (secure storage), sui (gRPC), pinace (PTBs), indexer (REST+SSE), firebase
+  features/   auth · home · agents · assets · activity · profile
+functions/    Cloud Function: indexer events -> FCM push
+figma/        drop Figma CSS exports here (design source of truth)
+AI-Context/   project documentation
+```

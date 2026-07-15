@@ -11,7 +11,7 @@ import '../../data/keystore/wallet_keystore.dart';
 
 /// Set from main() — false when firebase_options.dart hasn't been generated
 /// yet (run `flutterfire configure`). The Login screen shows a hint.
-final firebaseReadyProvider = StateProvider<bool>((ref) => true);
+final firebaseReadyProvider = Provider<bool>((ref) => true);
 
 final authStateProvider = StreamProvider<User?>((ref) {
   return FirebaseAuth.instance.authStateChanges();
@@ -50,12 +50,12 @@ class GoogleAuthService {
 }
 
 final keystoreProvider = Provider<WalletKeystore?>((ref) {
-  final user = ref.watch(authStateProvider).valueOrNull;
+  final user = ref.watch(authStateProvider).value;
   return user == null ? null : WalletKeystore(user.uid);
 });
 
 final firestoreRepoProvider = Provider<FirestoreRepo?>((ref) {
-  final user = ref.watch(authStateProvider).valueOrNull;
+  final user = ref.watch(authStateProvider).value;
   return user == null ? null : FirestoreRepo(user.uid);
 });
 
@@ -148,7 +148,7 @@ final accountsProvider =
         AccountsNotifier.new);
 
 final activeAccountProvider = Provider<WalletAccount?>((ref) {
-  return ref.watch(accountsProvider).valueOrNull?.active;
+  return ref.watch(accountsProvider).value?.active;
 });
 
 /// Biometric ("passkey") gate. Locked on cold start when the user enabled it;
@@ -190,7 +190,7 @@ class LockNotifier extends Notifier<bool> {
     try {
       final ok = await _auth.authenticate(
         localizedReason: 'Unlock your Pinace wallet',
-        options: const AuthenticationOptions(stickyAuth: true),
+        persistAcrossBackgrounding: true,
       );
       if (ok) state = false;
       return ok;
