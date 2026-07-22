@@ -34,7 +34,11 @@ class SuiService {
     final executed = await client.signAndExecuteTransaction(
       signer,
       tx,
-      readMask: ['digest', 'effects'],
+      // 'effects' alone doesn't include changed_objects.object_type — the
+      // Sui gRPC API gates that behind an explicit dotted path since it
+      // requires a separate type lookup. Without it, poolId parsing in
+      // PinaceTxService silently fails (empty objectType never matches).
+      readMask: ['digest', 'effects', 'effects.changed_objects.object_type'],
     );
     final status = executed.effects.status;
     final changed = executed.effects.changedObjects

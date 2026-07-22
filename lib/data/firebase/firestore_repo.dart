@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 /// Per-user metadata in Firestore. Never stores key material — only public
 /// addresses, display names, and preferences.
@@ -12,7 +13,12 @@ class FirestoreRepo {
   FirestoreRepo(this._uid);
 
   final String _uid;
-  final _db = FirebaseFirestore.instance;
+  // Project's Firestore database is named "pinace-wallet", not the special
+  // "(default)" id that FirebaseFirestore.instance targets.
+  final _db = FirebaseFirestore.instanceFor(
+    app: Firebase.app(),
+    databaseId: 'pinace-wallet',
+  );
 
   DocumentReference<Map<String, dynamic>> get _userDoc =>
       _db.collection('users').doc(_uid);

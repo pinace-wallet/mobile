@@ -1,0 +1,1008 @@
+Opacity(
+    opacity: 0.10,
+    child: Container(
+        width: 393,
+        height: 852,
+        padding: const EdgeInsets.only(
+            top: 16,
+            left: 16,
+            right: 14,
+            bottom: 25,
+        ),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+            color: Colors.black /* colors-layout-background */,
+        ),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 24,
+            children: [
+                Container(
+                    width: double.infinity,
+                    child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 188,
+                        children: [
+                            ConstrainedBox(
+                                constraints: BoxConstraints(minHeight: 28, maxHeight: 28),
+                                child: Container(
+                                    height: 28,
+                                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                                    decoration: ShapeDecoration(
+                                        color: const Color(0xFF3F3F46) /* colors-base-default */,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(9999),
+                                        ),
+                                    ),
+                                    child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                            Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 10,
+                                                    children: [
+                                                        Text(
+                                                            'Testnet',
+                                                            style: TextStyle(
+                                                                color: Colors.white /* colors-base-default-foreground */,
+                                                                fontSize: 14,
+                                                                fontFamily: 'SN Pro',
+                                                                fontWeight: FontWeight.w400,
+                                                                height: 1.43,
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                            ),
+                            Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                spacing: 8,
+                                children: [
+                                    Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: ShapeDecoration(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                            ),
+                                        ),
+                                        child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                                Container(width: 24, height: 24, child: Stack()),
+                                            ],
+                                        ),
+                                    ),
+                                    Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: ShapeDecoration(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                            ),
+                                        ),
+                                        child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                                Container(
+                                                    width: 24,
+                                                    height: 24,
+                                                    clipBehavior: Clip.antiAlias,
+                                                    decoration: BoxDecoration(),
+                                                    child: Stack(
+                                                        children: [
+                                                            Positioned(
+                                                                left: 2,
+                                                                top: 2,
+                                                                child: Container(
+                                                                    width: 19,
+                                                                    height: 19,
+                                                                    decoration: ShapeDecoration(
+                                                                        shape: OvalBorder(
+                                                                            side: BorderSide(
+                                                                                width: 1.50,
+                                                                                strokeAlign: BorderSide.strokeAlignCenter,
+                                                                                color: Colors.white /* colors-base-default-foreground */,
+                                                                            ),
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            ),
+                                                        ],
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ],
+                    ),
+                ),
+                Container(
+                    width: 370,
+                    height: 53,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(),
+                    child: Stack(
+                        children: [
+                            Positioned(
+                                left: 5.50,
+                                top: 7,
+                                child: Text(
+                                    'Transactions',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 36,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w500,
+                                        height: 0.78,
+                                    ),
+                                ),
+                            ),
+                            Positioned(
+                                left: 120.50,
+                                top: -35,
+                                child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(),
+                                ),
+                            ),
+                        ],
+                    ),
+                ),
+                Container(
+                    width: double.infinity,
+                    height: 670,
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 25,
+                        children: [
+                            Expanded(
+                                child: Container(
+                                    width: double.infinity,
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        spacing: 12,
+                                        children: [
+                                            Container(
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(16),
+                                                decoration: ShapeDecoration(
+                                                    color: const Color(0xFF18181B) /* colors-content-content1 */,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(16),
+                                                    ),
+                                                ),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 16,
+                                                    children: [
+                                                        Expanded(
+                                                            child: Container(
+                                                                height: 45.50,
+                                                                child: Stack(
+                                                                    children: [
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: -1,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'Transaction',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white,
+                                                                                                fontSize: 17,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                height: 1.50,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: 25.50,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'May 20, 12:01 AM',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white.withValues(alpha: 0.40),
+                                                                                                fontSize: 14,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w400,
+                                                                                                height: 1.43,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            Container(
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(16),
+                                                decoration: ShapeDecoration(
+                                                    color: const Color(0xFF18181B) /* colors-content-content1 */,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(16),
+                                                    ),
+                                                ),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 16,
+                                                    children: [
+                                                        Expanded(
+                                                            child: Container(
+                                                                height: 45.50,
+                                                                child: Stack(
+                                                                    children: [
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: -1,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'Transaction',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white,
+                                                                                                fontSize: 17,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                height: 1.50,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: 25.50,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'May 20, 12:01 AM',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white.withValues(alpha: 0.40),
+                                                                                                fontSize: 14,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w400,
+                                                                                                height: 1.43,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            Container(
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(16),
+                                                decoration: ShapeDecoration(
+                                                    color: const Color(0xFF18181B) /* colors-content-content1 */,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(16),
+                                                    ),
+                                                ),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 16,
+                                                    children: [
+                                                        Expanded(
+                                                            child: Container(
+                                                                height: 45.50,
+                                                                child: Stack(
+                                                                    children: [
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: -1,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'Transaction',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white,
+                                                                                                fontSize: 17,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                height: 1.50,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: 25.50,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'May 20, 12:01 AM',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white.withValues(alpha: 0.40),
+                                                                                                fontSize: 14,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w400,
+                                                                                                height: 1.43,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            Container(
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(16),
+                                                decoration: ShapeDecoration(
+                                                    color: const Color(0xFF18181B) /* colors-content-content1 */,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(16),
+                                                    ),
+                                                ),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 16,
+                                                    children: [
+                                                        Expanded(
+                                                            child: Container(
+                                                                height: 45.50,
+                                                                child: Stack(
+                                                                    children: [
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: -1,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'Transaction',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white,
+                                                                                                fontSize: 17,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                height: 1.50,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: 25.50,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'May 20, 12:01 AM',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white.withValues(alpha: 0.40),
+                                                                                                fontSize: 14,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w400,
+                                                                                                height: 1.43,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            Container(
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(16),
+                                                decoration: ShapeDecoration(
+                                                    color: const Color(0xFF18181B) /* colors-content-content1 */,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(16),
+                                                    ),
+                                                ),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 16,
+                                                    children: [
+                                                        Expanded(
+                                                            child: Container(
+                                                                height: 45.50,
+                                                                child: Stack(
+                                                                    children: [
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: -1,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'Transaction',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white,
+                                                                                                fontSize: 17,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                height: 1.50,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: 25.50,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'May 20, 12:01 AM',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white.withValues(alpha: 0.40),
+                                                                                                fontSize: 14,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w400,
+                                                                                                height: 1.43,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            Container(
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(16),
+                                                decoration: ShapeDecoration(
+                                                    color: const Color(0xFF18181B) /* colors-content-content1 */,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(16),
+                                                    ),
+                                                ),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 16,
+                                                    children: [
+                                                        Expanded(
+                                                            child: Container(
+                                                                height: 45.50,
+                                                                child: Stack(
+                                                                    children: [
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: -1,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'Transaction',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white,
+                                                                                                fontSize: 17,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                height: 1.50,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: 25.50,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'May 20, 12:01 AM',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white.withValues(alpha: 0.40),
+                                                                                                fontSize: 14,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w400,
+                                                                                                height: 1.43,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            Container(
+                                                width: double.infinity,
+                                                padding: const EdgeInsets.all(16),
+                                                decoration: ShapeDecoration(
+                                                    color: const Color(0xFF18181B) /* colors-content-content1 */,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(16),
+                                                    ),
+                                                ),
+                                                child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    spacing: 16,
+                                                    children: [
+                                                        Expanded(
+                                                            child: Container(
+                                                                height: 45.50,
+                                                                child: Stack(
+                                                                    children: [
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: -1,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'Transaction',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white,
+                                                                                                fontSize: 17,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                                height: 1.50,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                        Positioned(
+                                                                            left: 0,
+                                                                            top: 25.50,
+                                                                            child: Container(
+                                                                                width: 331,
+                                                                                child: Column(
+                                                                                    mainAxisSize: MainAxisSize.min,
+                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    children: [
+                                                                                        Text(
+                                                                                            'May 20, 12:01 AM',
+                                                                                            style: TextStyle(
+                                                                                                color: Colors.white.withValues(alpha: 0.40),
+                                                                                                fontSize: 14,
+                                                                                                fontFamily: 'Plus Jakarta Sans',
+                                                                                                fontWeight: FontWeight.w400,
+                                                                                                height: 1.43,
+                                                                                            ),
+                                                                                        ),
+                                                                                    ],
+                                                                                ),
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                            ),
+                            Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: ShapeDecoration(
+                                    color: const Color(0xBF26272A),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(9999),
+                                    ),
+                                ),
+                                child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    spacing: 8,
+                                    children: [
+                                        Container(
+                                            width: 48,
+                                            height: 48,
+                                            decoration: ShapeDecoration(
+                                                color: const Color(0xFF006FEE) /* colors-base-primary-400 */,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(9999),
+                                                ),
+                                            ),
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                    Container(width: 24, height: 24, child: Stack()),
+                                                ],
+                                            ),
+                                        ),
+                                        Container(
+                                            width: 48,
+                                            height: 48,
+                                            decoration: ShapeDecoration(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(9999),
+                                                ),
+                                            ),
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                    Container(width: 24, height: 24, child: Stack()),
+                                                ],
+                                            ),
+                                        ),
+                                        Container(
+                                            width: 48,
+                                            height: 48,
+                                            decoration: ShapeDecoration(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(9999),
+                                                ),
+                                            ),
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                    Container(width: 24, height: 24, child: Stack()),
+                                                ],
+                                            ),
+                                        ),
+                                        Container(
+                                            width: 48,
+                                            height: 48,
+                                            decoration: ShapeDecoration(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(9999),
+                                                ),
+                                            ),
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                    Container(width: 24, height: 24, child: Stack()),
+                                                ],
+                                            ),
+                                        ),
+                                        Container(
+                                            width: 48,
+                                            height: 48,
+                                            decoration: ShapeDecoration(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(9999),
+                                                ),
+                                            ),
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                    Container(width: 24, height: 24, child: Stack()),
+                                                ],
+                                            ),
+                                        ),
+                                    ],
+                                ),
+                            ),
+                        ],
+                    ),
+                ),
+            ],
+        ),
+    ),
+)
+
+Text(
+    'Testnet',
+    style: TextStyle(
+        color: Colors.white /* colors-base-default-foreground */,
+        fontSize: 14,
+        fontFamily: 'SN Pro',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)
+// ---
+Text(
+    'Transactions',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 36,
+        fontFamily: 'Inter',
+        fontWeight: FontWeight.w500,
+        height: 0.78,
+    ),
+)
+// ---
+Text(
+    'Transaction',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w600,
+        height: 1.50,
+    ),
+)
+// ---
+Text(
+    'May 20, 12:01 AM',
+    style: TextStyle(
+        color: Colors.white.withValues(alpha: 0.40),
+        fontSize: 14,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)
+// ---
+Text(
+    'Transaction',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w600,
+        height: 1.50,
+    ),
+)
+// ---
+Text(
+    'May 20, 12:01 AM',
+    style: TextStyle(
+        color: Colors.white.withValues(alpha: 0.40),
+        fontSize: 14,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)
+// ---
+Text(
+    'Transaction',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w600,
+        height: 1.50,
+    ),
+)
+// ---
+Text(
+    'May 20, 12:01 AM',
+    style: TextStyle(
+        color: Colors.white.withValues(alpha: 0.40),
+        fontSize: 14,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)
+// ---
+Text(
+    'Transaction',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w600,
+        height: 1.50,
+    ),
+)
+// ---
+Text(
+    'May 20, 12:01 AM',
+    style: TextStyle(
+        color: Colors.white.withValues(alpha: 0.40),
+        fontSize: 14,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)
+// ---
+Text(
+    'Transaction',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w600,
+        height: 1.50,
+    ),
+)
+// ---
+Text(
+    'May 20, 12:01 AM',
+    style: TextStyle(
+        color: Colors.white.withValues(alpha: 0.40),
+        fontSize: 14,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)
+// ---
+Text(
+    'Transaction',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w600,
+        height: 1.50,
+    ),
+)
+// ---
+Text(
+    'May 20, 12:01 AM',
+    style: TextStyle(
+        color: Colors.white.withValues(alpha: 0.40),
+        fontSize: 14,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)
+// ---
+Text(
+    'Transaction',
+    style: TextStyle(
+        color: Colors.white,
+        fontSize: 17,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w600,
+        height: 1.50,
+    ),
+)
+// ---
+Text(
+    'May 20, 12:01 AM',
+    style: TextStyle(
+        color: Colors.white.withValues(alpha: 0.40),
+        fontSize: 14,
+        fontFamily: 'Plus Jakarta Sans',
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+    ),
+)

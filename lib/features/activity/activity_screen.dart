@@ -28,7 +28,13 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
     final firstPage = results.first;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Transactions')),
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: const Text('Transactions', style: TextStyle(fontFamily: 'SN Pro', fontWeight: FontWeight.w600, color: Colors.white)),
+        backgroundColor: Colors.black,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.read(indexerProvider).invalidate('/events');
@@ -66,27 +72,47 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
             }
 
             return ListView(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(16),
               children: [
                 for (final entry in grouped.entries) ...[
                   Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 4),
+                    padding: const EdgeInsets.only(top: 16, bottom: 8, left: 4),
                     child: Text(
                       entry.key,
                       style: const TextStyle(
-                          color: PinaceColors.zinc400,
-                          fontSize: 12,
+                          color: Color(0xFFA1A1AA),
+                          fontSize: 14,
+                          fontFamily: 'SN Pro',
                           fontWeight: FontWeight.w600),
                     ),
                   ),
-                  for (final event in entry.value) EventRow(event: event),
+                  for (final event in entry.value) 
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF18181B),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: EventRow(event: event),
+                      ),
+                    ),
                 ],
                 if (hasMore)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 24),
                     child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
+                        side: const BorderSide(color: Color(0xFF3F3F46)),
+                      ),
                       onPressed: () => setState(() => _pages++),
-                      child: const Text('Load more'),
+                      child: const Text('Load more', style: TextStyle(fontFamily: 'SN Pro', color: Colors.white)),
                     ),
                   ),
               ],

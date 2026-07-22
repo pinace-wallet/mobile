@@ -19,20 +19,25 @@ class AssetsScreen extends ConsumerWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          title: const Text('Assets'),
+          title: const Text('Assets', style: TextStyle(fontFamily: 'SN Pro', fontWeight: FontWeight.w600, color: Colors.white)),
+          backgroundColor: Colors.black,
+          elevation: 0,
           actions: [
             IconButton(
-              icon: const Icon(Icons.qr_code),
+              icon: const Icon(Icons.qr_code, color: Colors.white),
               onPressed: account == null
                   ? null
                   : () => _showReceiveSheet(context, account.address),
             ),
           ],
           bottom: const TabBar(
-            indicatorColor: PinaceColors.cyan,
+            indicatorColor: Color(0xFF006FEE),
             labelColor: Colors.white,
-            unselectedLabelColor: PinaceColors.zinc400,
+            unselectedLabelColor: Color(0xFFA1A1AA),
+            labelStyle: TextStyle(fontFamily: 'SN Pro', fontWeight: FontWeight.w600),
+            unselectedLabelStyle: TextStyle(fontFamily: 'SN Pro', fontWeight: FontWeight.w400),
             tabs: [Tab(text: 'Tokens'), Tab(text: 'NFTs')],
           ),
         ),
@@ -52,38 +57,39 @@ class AssetsScreen extends ConsumerWidget {
                         ),
                       ])
                     : ListView.separated(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(16),
                         itemCount: list.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 10),
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final balance = list[index];
-                          final symbol =
-                              balance.coinType.split('::').last;
+                          final symbol = balance.coinType.split('::').last;
                           return Container(
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              color: PinaceColors.zinc900,
-                              borderRadius: BorderRadius.circular(18),
+                            padding: const EdgeInsets.all(16),
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF18181B),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                             ),
                             child: Row(
                               children: [
                                 CircleAvatar(
-                                  radius: 18,
+                                  radius: 20,
                                   backgroundColor: symbol == 'SUI'
-                                      ? PinaceColors.primary
-                                          .withValues(alpha: 0.2)
-                                      : PinaceColors.zinc800,
+                                      ? const Color(0xFF006FEE).withValues(alpha: 0.2)
+                                      : const Color(0xFF3F3F46),
                                   child: Text(
                                     symbol.isEmpty
                                         ? '?'
                                         : symbol.characters.first,
-                                    style: const TextStyle(
-                                        fontSize: 14,
+                                    style: TextStyle(
+                                        fontFamily: 'SN Pro',
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w700,
-                                        color: PinaceColors.cyan),
+                                        color: symbol == 'SUI' ? const Color(0xFF006FEE) : Colors.white),
                                   ),
                                 ),
-                                const SizedBox(width: 12),
+                                const SizedBox(width: 16),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
@@ -91,14 +97,17 @@ class AssetsScreen extends ConsumerWidget {
                                     children: [
                                       Text(symbol,
                                           style: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700)),
+                                              color: Colors.white,
+                                              fontFamily: 'SN Pro',
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600)),
                                       Text(
                                         shortenAddress(balance.coinType,
                                             head: 8, tail: 12),
                                         style: const TextStyle(
-                                            color: PinaceColors.textMuted,
-                                            fontSize: 11),
+                                            color: Color(0xFFA1A1AA),
+                                            fontFamily: 'SN Pro',
+                                            fontSize: 12),
                                       ),
                                     ],
                                   ),
@@ -106,8 +115,10 @@ class AssetsScreen extends ConsumerWidget {
                                 Text(
                                   formatSuiFromMist(balance.totalBalance),
                                   style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700),
+                                      color: Colors.white,
+                                      fontFamily: 'SN Pro',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
@@ -152,13 +163,14 @@ class AssetsScreen extends ConsumerWidget {
               backgroundColor: Colors.white,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
           AddressPill(address: address, label: address),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           const Text(
             'Sui Testnet',
-            style: TextStyle(color: PinaceColors.textMuted, fontSize: 12),
+            style: TextStyle(color: Color(0xFFA1A1AA), fontSize: 14, fontFamily: 'SN Pro'),
           ),
+          const SizedBox(height: 24),
         ],
       ),
     );

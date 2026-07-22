@@ -5,5 +5,8 @@
     <base-config cleartextTrafficPermitted="false"/>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="false">54.80.234.72</domain>
+        <!-- Android emulator's alias for the host machine's localhost, used
+             when running the backend locally via docker compose. -->
+        <domain includeSubdomains="false">10.0.2.2</domain>
     </domain-config>
 </network-security-config>

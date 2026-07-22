@@ -22,198 +22,318 @@ class HomeScreen extends ConsumerWidget {
     final events = ref.watch(poolEventsProvider(1));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        actions: [
-          if (account != null)
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: Center(child: AddressPill(address: account.address)),
+      backgroundColor: Colors.black, // From Figma
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: () async => invalidateAfterTx(ref),
+          child: ListView(
+            padding: const EdgeInsets.only(
+              top: 16,
+              left: 16,
+              right: 14,
+              bottom: 25,
             ),
-        ],
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async => invalidateAfterTx(ref),
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            // ── Owner balance ────────────────────────────────────────────
-            Text('Total Balance',
-                style: TextStyle(color: PinaceColors.zinc400, fontSize: 13)),
-            const SizedBox(height: 4),
-            balance.when(
-              data: (mist) => Text(
-                mist == null ? '—' : '${formatSuiFromMist(mist)} SUI',
-                style:
-                    const TextStyle(fontSize: 34, fontWeight: FontWeight.w800),
-              ),
-              loading: () => const Text('...',
-                  style: TextStyle(fontSize: 34, fontWeight: FontWeight.w800)),
-              error: (e, _) => const Text('—',
-                  style: TextStyle(fontSize: 34, fontWeight: FontWeight.w800)),
-            ),
-            const SizedBox(height: 20),
-
-            // ── Pool card ────────────────────────────────────────────────
-            pool.when(
-              data: (p) => p == null
-                  ? _CreatePoolCard(onCreated: () => invalidateAfterTx(ref))
-                  : GradientCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text('Pool Balance',
-                                  style: TextStyle(
-                                      color: PinaceColors.zinc400,
-                                      fontSize: 13)),
-                              const Spacer(),
-                              StatusChip(
-                                label: p.status,
-                                color: p.status == 'active'
-                                    ? PinaceColors.success
-                                    : PinaceColors.warning,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '${formatSuiFromMist(p.balanceOf('0x2::sui::SUI'))} SUI',
-                            style: const TextStyle(
-                                fontSize: 28, fontWeight: FontWeight.w800),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(shortenAddress(p.poolId, head: 10, tail: 6),
-                              style: const TextStyle(
-                                  color: PinaceColors.textMuted, fontSize: 12)),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: FilledButton(
-                                  onPressed: () => showDepositSheet(
-                                      context, ref,
-                                      poolId: p.poolId),
-                                  child: const Text('Add'),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: () => showWithdrawSheet(
-                                      context, ref,
-                                      poolId: p.poolId,
-                                      poolBalance:
-                                          p.balanceOf('0x2::sui::SUI')),
-                                  child: const Text('Withdraw'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+            children: [
+              // ── Top Row ────────────────────────────────────────────
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 28,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF3F3F46),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9999),
                       ),
                     ),
-              loading: () => const GradientCard(
-                child: SizedBox(
-                    height: 120,
-                    child: Center(child: CircularProgressIndicator())),
-              ),
-              error: (e, _) => GradientCard(
-                child: Text('Pool unavailable: $e',
-                    style: const TextStyle(color: PinaceColors.zinc400)),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // ── Stats strip ──────────────────────────────────────────────
-            stats.when(
-              data: (s) => s == null
-                  ? const SizedBox.shrink()
-                  : Row(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        _Stat(label: 'Agents', value: '${s.totalAgents}'),
-                        _Stat(label: 'Executing', value: '${s.executingCount}'),
-                        _Stat(
-                          label: 'Success',
-                          value: s.successRate == null
-                              ? '—'
-                              : '${(s.successRate! * 100).toStringAsFixed(0)}%',
+                        Text(
+                          'Testnet',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'SN Pro',
+                            fontWeight: FontWeight.w400,
+                            height: 1.43,
+                          ),
                         ),
                       ],
                     ),
-              loading: () => const SizedBox.shrink(),
-              error: (e, _) => const SizedBox.shrink(),
-            ),
-            const SizedBox(height: 24),
-
-            // ── Recent activity ──────────────────────────────────────────
-            Row(
-              children: [
-                const Text('Recent Transactions',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-                const Spacer(),
-                TextButton(
-                  onPressed: () => context.go('/activity'),
-                  child: const Text('See all'),
-                ),
-              ],
-            ),
-            events.when(
-              data: (page) {
-                final items = page?.data.take(5).toList() ?? const [];
-                if (items.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Text('No activity yet',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: PinaceColors.textMuted)),
-                  );
-                }
-                return Column(
-                  children: [for (final e in items) EventRow(event: e)],
-                );
-              },
-              loading: () => const Padding(
-                padding: EdgeInsets.all(24),
-                child: Center(child: CircularProgressIndicator()),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (account != null)
+                        AddressPill(address: account.address),
+                    ],
+                  ),
+                ],
               ),
-              error: (e, _) => const SizedBox.shrink(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+              const SizedBox(height: 24),
 
-class _Stat extends StatelessWidget {
-  const _Stat({required this.label, required this.value});
+              // ── Owner balance ────────────────────────────────────────────
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Total Balance',
+                    style: TextStyle(
+                      color: const Color(0xFFA1A1AA),
+                      fontSize: 16,
+                      fontFamily: 'SN Pro',
+                      fontWeight: FontWeight.w400,
+                      height: 1.50,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  balance.when(
+                    data: (mist) {
+                      final val = mist == null ? '0.00' : formatSuiFromMist(mist);
+                      return Text(
+                        '$val SUI',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 48,
+                          fontFamily: 'SN Pro',
+                          fontWeight: FontWeight.w700,
+                          height: 1,
+                        ),
+                      );
+                    },
+                    loading: () => Text(
+                      '...',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 48,
+                        fontFamily: 'SN Pro',
+                        fontWeight: FontWeight.w700,
+                        height: 1,
+                      ),
+                    ),
+                    error: (e, _) => Text(
+                      '—',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 48,
+                        fontFamily: 'SN Pro',
+                        fontWeight: FontWeight.w700,
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                  // Figma +$2.47 stub
+                  const SizedBox(height: 8),
+                  Text(
+                    '+\$2.47 (Figma Mock)',
+                    style: TextStyle(
+                      color: const Color(0xFF17C964),
+                      fontSize: 14,
+                      fontFamily: 'SN Pro',
+                      fontWeight: FontWeight.w400,
+                      height: 1.43,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
 
-  final String label;
-  final String value;
+              // ── Pool card ────────────────────────────────────────────────
+              pool.when(
+                data: (p) => p == null
+                    ? _CreatePoolCard(onCreated: () => invalidateAfterTx(ref))
+                    : Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: ShapeDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment(0.02, 0.07),
+                            end: Alignment(0.98, 0.97),
+                            colors: [Color(0xFF18181B), Color(0xFF0C1F34)],
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                        ),
+                        child: IntrinsicHeight(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                clipBehavior: Clip.antiAlias,
+                                decoration: ShapeDecoration(
+                                  color: const Color(0xFF006FEE),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Pool Balance',
+                                      style: TextStyle(
+                                        color: const Color(0xFF001731),
+                                        fontSize: 20,
+                                        fontFamily: 'SN Pro',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.33,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      '${formatSuiFromMist(p.balanceOf('0x2::sui::SUI'))} SUI',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 22,
+                                        fontFamily: 'SN Pro',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.33,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Add or withdraw',
+                                      style: TextStyle(
+                                        color: const Color(0xFFA1A1AA),
+                                        fontSize: 12,
+                                        fontFamily: 'SN Pro',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.33,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      'Pool balance help Pinace interact with',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'SN Pro',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.50,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    GestureDetector(
+                                      onTap: () => showDepositSheet(
+                                          context, ref, poolId: p.poolId),
+                                      child: Container(
+                                        height: 40,
+                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                        decoration: ShapeDecoration(
+                                          color: const Color(0xFFFAFAFA),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(9999),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Add balance',
+                                            style: TextStyle(
+                                              color: const Color(0xFF27272A),
+                                              fontSize: 14,
+                                              fontFamily: 'SN Pro',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        ),
+                      ),
+                loading: () => const GradientCard(
+                  child: SizedBox(
+                      height: 120,
+                      child: Center(child: CircularProgressIndicator())),
+                ),
+                error: (e, _) => GradientCard(
+                  child: Text('Pool unavailable: $e',
+                      style: const TextStyle(color: PinaceColors.zinc400)),
+                ),
+              ),
+              const SizedBox(height: 24),
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          color: PinaceColors.zinc900,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          children: [
-            Text(value,
-                style: const TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 2),
-            Text(label,
-                style: const TextStyle(
-                    color: PinaceColors.zinc400, fontSize: 11)),
-          ],
+              // ── Recent activity ──────────────────────────────────────────
+              Row(
+                children: [
+                  Text(
+                    'Transactions',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'SN Pro',
+                      fontWeight: FontWeight.w600,
+                      height: 1.56,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => context.go('/activity'),
+                    child: const Text('See all'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              events.when(
+                data: (page) {
+                  final items = page?.data.take(5).toList() ?? const [];
+                  if (items.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Text('No activity yet',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: PinaceColors.textMuted)),
+                    );
+                  }
+                  return Column(
+                    children: [
+                      for (final e in items)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16),
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF18181B),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            child: EventRow(event: e), // Wrap the internal design
+                          ),
+                        )
+                    ],
+                  );
+                },
+                loading: () => const Padding(
+                  padding: EdgeInsets.all(24),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+                error: (e, _) => const SizedBox.shrink(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -311,23 +431,44 @@ class EventRow extends StatelessWidget {
         ? (event.eventType as String, Icons.bolt)
         : _labels[key]!;
 
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-        backgroundColor: PinaceColors.zinc800,
-        child: Icon(icon, size: 18, color: PinaceColors.zinc300),
-      ),
-      title: Text(label,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-      subtitle: Text(
-        timeAgo(event.time as DateTime),
-        style: const TextStyle(color: PinaceColors.textMuted, fontSize: 12),
-      ),
-      trailing: event.txDigest == ''
-          ? null
-          : Text(shortenAddress(event.txDigest as String, head: 4, tail: 4),
-              style: const TextStyle(
-                  color: PinaceColors.textMuted, fontSize: 11)),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 17,
+                fontFamily: 'Plus Jakarta Sans',
+                fontWeight: FontWeight.w600,
+                height: 1.50,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              timeAgo(event.time as DateTime),
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.40),
+                fontSize: 14,
+                fontFamily: 'Plus Jakarta Sans',
+                fontWeight: FontWeight.w400,
+                height: 1.43,
+              ),
+            ),
+          ],
+        ),
+        if (event.txDigest != '')
+          Text(
+            shortenAddress(event.txDigest as String, head: 4, tail: 4),
+            style: TextStyle(
+              color: PinaceColors.textMuted,
+              fontSize: 12,
+            ),
+          ),
+      ],
     );
   }
 }
