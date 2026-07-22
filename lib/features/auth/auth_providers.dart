@@ -85,8 +85,32 @@ class AccountsNotifier extends AsyncNotifier<AccountsState> {
   Future<AccountsState> build() async {
     final ks = ref.watch(keystoreProvider);
     if (ks == null) return const AccountsState(accounts: [], activeId: null);
-    final accounts = await ks.listAccounts();
+    
+    var accounts = await ks.listAccounts();
     final activeId = await ks.getActiveAccountId();
+    
+    try {
+      final repo = ref.read(firestoreRepoProvider);
+      if (repo != null) {
+        final remoteNames = await repo.getAccountNames();
+        bool changed = false;
+        
+        for (var i = 0; i < accounts.length; i++) {
+          final acc = accounts[i];
+          final remoteName = remoteNames[acc.address];
+          if (remoteName != null && remoteName != acc.name) {
+            accounts[i] = acc.copyWith(name: remoteName);
+            await ks.renameAccount(acc.id, remoteName);
+            changed = true;
+          }
+        }
+        if (changed) {
+          // Note: we updated `accounts` list in place, but since it's a new state object,
+          // Riverpod will rebuild listeners.
+        }
+      }
+    } catch (_) {/* offline or error is fine */}
+
     return AccountsState(accounts: accounts, activeId: activeId);
   }
 
@@ -112,17 +136,23 @@ class AccountsNotifier extends AsyncNotifier<AccountsState> {
   }
 
   Future<void> rename(String accountId, String name) async {
+    final account = state.value?.accounts.firstWhere((a) => a.id == accountId, orElse: () => throw Exception('Account not found'));
     await _keystore.renameAccount(accountId, name);
     try {
-      await ref.read(firestoreRepoProvider)?.renameAccount(accountId, name);
+      if (account != null) {
+        await ref.read(firestoreRepoProvider)?.renameAccount(account.address, name);
+      }
     } catch (_) {/* offline is fine */}
     ref.invalidateSelf();
   }
 
   Future<void> remove(String accountId) async {
+    final account = state.value?.accounts.firstWhere((a) => a.id == accountId, orElse: () => throw Exception('Account not found'));
     await _keystore.removeAccount(accountId);
     try {
-      await ref.read(firestoreRepoProvider)?.deleteAccount(accountId);
+      if (account != null) {
+        await ref.read(firestoreRepoProvider)?.deleteAccount(account.address);
+      }
     } catch (_) {/* offline is fine */}
     ref.invalidateSelf();
   }
@@ -135,7 +165,7 @@ class AccountsNotifier extends AsyncNotifier<AccountsState> {
   Future<void> _syncToFirestore(WalletAccount account) async {
     try {
       await ref.read(firestoreRepoProvider)?.upsertAccount(
-            accountId: account.id,
+            accountId: account.address,
             name: account.name,
             address: account.address,
           );

@@ -51,6 +51,14 @@ class FirestoreRepo {
   Future<void> deleteAccount(String accountId) =>
       _userDoc.collection('accounts').doc(accountId).delete();
 
+  Future<Map<String, String>> getAccountNames() async {
+    final snap = await _userDoc.collection('accounts').get();
+    return {
+      for (final doc in snap.docs)
+        if (doc.data()['name'] is String) doc.id: doc.data()['name'] as String,
+    };
+  }
+
   Future<void> setAgentNickname(String agentId, String nickname) =>
       _userDoc.collection('agentMeta').doc(agentId).set({
         'nickname': nickname,
