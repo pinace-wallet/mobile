@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "806824587137",
+    "project_id": "prm-lab-3",
+    "storage_bucket": "prm-lab-3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806824587137:android:4962e3b55c9956394b8280",
+        "android_client_info": {
+          "package_name": "com.example.journal_trend_analyzer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806824587137-fu46vl00r7srpku428i9pmgudnu6bkkt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.journal_trend_analyzer",
+            "certificate_hash": "474d0ad90a55b045f4744764da126e69a3a54ca1"
+          }
+        },
+        {
+          "client_id": "806824587137-72rreb8m04tr7ku1ipe837khjeesr2j2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3aAsuyY8a601VW_Xe_L6FO5zLEOP-tNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806824587137-72rreb8m04tr7ku1ipe837khjeesr2j2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "806824587137-4eg4dt8n7akgjj0m274lj5vbo0aiqv8s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "xyz.pinace.pinaceWallet"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806824587137:android:a58bcfa3ad0f59d54b8280",
+        "android_client_info": {
+          "package_name": "xyz.pinace.pinace_wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806824587137-n56t8ovi73fdlb73d3e44i18let7h612.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.pinace.pinace_wallet",
+            "certificate_hash": "cc149f5fb3849044ec80de7b1e26387f09aded3e"
+          }
+        },
+        {
+          "client_id": "806824587137-72rreb8m04tr7ku1ipe837khjeesr2j2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3aAsuyY8a601VW_Xe_L6FO5zLEOP-tNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806824587137-72rreb8m04tr7ku1ipe837khjeesr2j2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "806824587137-4eg4dt8n7akgjj0m274lj5vbo0aiqv8s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "xyz.pinace.pinaceWallet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
