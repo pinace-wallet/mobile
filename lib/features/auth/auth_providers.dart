@@ -25,7 +25,13 @@ class GoogleAuthService {
   Future<UserCredential> signInWithGoogle() async {
     final signIn = GoogleSignIn.instance;
     if (!_initialized) {
-      await signIn.initialize();
+      // v7's authenticate() needs the Web OAuth client id (client_type: 3
+      // in google-services.json) to mint an ID token on Android — the
+      // Android client id alone isn't enough as of this package version.
+      await signIn.initialize(
+        serverClientId:
+            '806824587137-72rreb8m04tr7ku1ipe837khjeesr2j2.apps.googleusercontent.com',
+      );
       _initialized = true;
     }
     final account = await signIn.authenticate();

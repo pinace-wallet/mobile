@@ -16,7 +16,8 @@
 └───────────────┬───────────────────┬───────────────────┬──────────────┘
                 │ writes (PTB)      │ reads              │ auth/metadata/push
         Sui testnet fullnode   Pinace indexer      Firebase (Auth,
-        (gRPC-web :443)        http://54.80.234.72:3001  Firestore, FCM)
+        (gRPC-web :443)        backend-production-baa0   Firestore, FCM)
+                               .up.railway.app (HTTPS)
                                           ▲
                              functions/ poller (indexer → FCM)
 ```

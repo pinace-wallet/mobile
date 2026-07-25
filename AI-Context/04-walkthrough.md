@@ -127,44 +127,52 @@ regeneration or Flutter upgrade.
 
 ## 4. Running against the indexer
 
-By default the app points at the production indexer
-(`http://54.80.234.72:3001`, see `lib/core/config/env.dart`). If that
-instance is down or unreachable from your network, run it locally instead
-of debugging blind:
+By default the app points at the production indexer, deployed on Railway
+(`https://backend-production-baa0.up.railway.app`, see
+`lib/core/config/env.dart`'s `Env.indexerUrl`). This replaced an earlier
+AWS EC2 deployment (`54.80.234.72:3001`) that stopped being reachable —
+Railway was chosen for a fast, free redeploy of the exact same
+`backend/` Dockerfile/docker-compose setup. Because it's HTTPS,
+`android/app/src/main/res/xml/network_security_config.xml` and
+`ios/Runner/Info.plist` no longer need any cleartext/ATS exception — both
+are HTTPS-only now.
 
+**If Railway shows empty data** (`/actions` returns `"data":[],"total":0"`),
+check in the Railway dashboard that the `backend` service actually has
+`PACKAGE_ID`, `SUI_RPC_URL`, and `DATABASE_URL` set — `docker-compose.yml`'s
+env vars don't auto-transfer to Railway, they have to be set per-service
+manually. `PACKAGE_ID` must match this repo's target
+(`lib/core/config/env.dart`'s `Env.packageId`, currently
+`0x5be5ab...a23b`) or every screen will look empty even though the chain
+state is fine. Otherwise it may just still be doing its initial
+full-history replay from the package's genesis — give it a few minutes.
+
+If you ever need to fall back to running the indexer locally instead
+(e.g. Railway is down, or you're testing an indexer-side change before
+deploying it):
 ```bash
 cd ../backend
 docker compose up --build
 ```
-
-This needs Docker Desktop running first (`docker info` should succeed; if
-not, launch Docker Desktop and wait for it). First run does a fresh
-Postgres init + `prisma migrate deploy` + a full-history replay from the
-package's genesis — expect it to take a while and to log a transient
-`P2028` transaction-timeout during replay (self-recovers on retry). It's
-caught up once you see `lagMs` settle low and `"No new events found"`
-polling steadily.
-
-**Check `PACKAGE_ID` in `backend/docker-compose.yml` matches the package
-this repo targets** (`lib/core/config/env.dart`'s `Env.packageId`,
-currently `0x5be5ab...a23b`) before relying on local indexer output — a
-stale default here will index the wrong package's events and every screen
-will look empty even though the chain state is fine.
-
-Point the app at the local indexer:
+Docker Desktop must be running first. First run does a fresh Postgres
+init + `prisma migrate deploy` + a full-history replay — expect a
+transient `P2028` transaction-timeout during replay (self-recovers on
+retry); caught up once `lagMs` settles low and you see `"No new events
+found"` polling steadily. Then point the app at it:
 ```bash
 flutter run --dart-define=INDEXER_URL=http://10.0.2.2:3001
 ```
 `10.0.2.2` is the Android emulator's alias for the host machine's
-localhost (already whitelisted for cleartext in
-`android/app/src/main/res/xml/network_security_config.xml` alongside the
-production IP). A physical device on the same LAN needs your machine's
-actual LAN IP instead, added to the same network-security-config file.
+localhost. Since this is plain HTTP, you'll need to temporarily re-add a
+cleartext domain-config exception for it in `network_security_config.xml`
+(removed by default now that production is HTTPS) — don't leave that
+exception in for a release build. A physical device on the same LAN needs
+your machine's actual LAN IP instead of `10.0.2.2`.
 
-**Remember to drop `--dart-define=INDEXER_URL=...` (or switch it back to
-the production URL) once you're done testing locally** — otherwise the
-mobile app and the browser extension will silently disagree on state
-because they're reading from different indexers.
+**Remember to drop `--dart-define=INDEXER_URL=...` once you're done
+testing locally** — otherwise the mobile app and the browser extension
+will silently disagree on state because they're reading from different
+indexers.
 
 ## 5. Debugging "transaction succeeded but nothing shows up in the UI"
 

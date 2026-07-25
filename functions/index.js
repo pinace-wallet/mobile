@@ -15,7 +15,8 @@ const { getMessaging } = require("firebase-admin/messaging");
 
 initializeApp();
 
-const INDEXER_URL = process.env.INDEXER_URL ?? "http://54.80.234.72:3001";
+const INDEXER_URL =
+  process.env.INDEXER_URL ?? "https://backend-production-baa0.up.railway.app";
 
 const NOTIFY = {
   ActionSettledEvent: (e) => ({

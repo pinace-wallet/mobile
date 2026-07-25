@@ -6,7 +6,7 @@ abstract final class Env {
   /// Read-only Pinace event indexer (REST + SSE). No auth required.
   static const indexerUrl = String.fromEnvironment(
     'INDEXER_URL',
-    defaultValue: 'http://54.80.234.72:3001',
+    defaultValue: 'https://backend-production-baa0.up.railway.app',
   );
 
   /// Deployed Pinace `core` Move package on testnet.

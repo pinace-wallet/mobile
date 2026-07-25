@@ -28,21 +28,6 @@
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Unlock your Pinace wallet with Face ID.</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<!-- The Pinace indexer is plain HTTP today; exception scoped via
-		     NSAllowsArbitraryLoads until it moves behind HTTPS. -->
-		<key>NSAllowsArbitraryLoads</key>
-		<false/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>54.80.234.72</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
