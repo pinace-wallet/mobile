@@ -42,19 +42,31 @@ class CanonicalPoolResolver {
     String? best;
     BigInt bestBalance = BigInt.from(-1);
     for (final poolId in poolIds) {
+      // On-chain existence + package match is authoritative — if this
+      // fails, the pool genuinely isn't usable, so skip it.
+      String? type;
       try {
-        final type = await _sui.getObjectType(poolId);
-        if (packageIdFromType(type) != Env.packageId) continue;
+        type = await _sui.getObjectType(poolId);
+      } catch (_) {
+        continue;
+      }
+      if (type == null || packageIdFromType(type) != Env.packageId) continue;
+
+      // The indexer's balance is only a display nicety — if it's down or
+      // hasn't caught up, keep the candidate with an unknown (0) balance
+      // rather than dropping an otherwise-valid, on-chain-verified pool.
+      BigInt sui = BigInt.zero;
+      try {
         final pool = await _indexer.getPool(poolId);
-        final sui = pool.balances
+        sui = pool.balances
             .where((b) => b.coinType.contains('::sui::SUI'))
             .fold(BigInt.zero, (sum, b) => sum + b.amountMist);
-        if (sui > bestBalance) {
-          bestBalance = sui;
-          best = poolId;
-        }
       } catch (_) {
-        // Pool unreadable — skip rather than fail the whole pick.
+        // indexer unavailable — balance stays unknown, pool still valid
+      }
+      if (sui > bestBalance) {
+        bestBalance = sui;
+        best = poolId;
       }
     }
     return best;
