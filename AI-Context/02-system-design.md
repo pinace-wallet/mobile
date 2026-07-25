@@ -83,7 +83,15 @@ Riverpod. `accountsProvider` (AsyncNotifier) owns the account list + active id; 
   users/{uid}/accounts/{accId}     name, address, order, createdAt
   users/{uid}/agentMeta/{agentId}  nickname
   ```
-  Rules: `match /users/{uid}/{document=**} { allow read, write: if request.auth != null && request.auth.uid == uid; }` — deny all else.
+  Rules (version-controlled at `mobile/firestore.rules`, deploy via
+  `firebase deploy --only firestore:rules --project=prm-lab-3`):
+  `match /users/{uid}/{document=**} { allow read, write: if request.auth != null && request.auth.uid == uid; }` — deny all else.
+  A second top-level collection, `addressOwners/{address} -> {uid, claimedAt}`,
+  enforces that a wallet address can only ever be linked to one Google
+  account at a time (first-claim-wins, via Firestore's create/update
+  distinction). Both clients write it via `claimAddress(address)` before
+  writing `users/{uid}/accounts/{address}` — see `firestore_repo.dart`
+  (mobile) and `Frontend/lib/firebase/repo.ts` (extension).
 - **FCM**: `functions/` scheduled poller reads new indexer `/events`, maps owner address → users via `collectionGroup('accounts').where('address' == owner)`, sends token-targeted pushes (topics avoided: 0x addresses violate topic charset). Foreground messages surfaced with `flutter_local_notifications`.
 
 ## 6. Theming

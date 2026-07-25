@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Per-user metadata (mobile + extension both write here). Never holds
+    // key material — only public addresses, display names, prefs. Each
+    // uid's subtree is fully isolated.
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Global address -> owning uid registry. Enforces that a wallet address
+    // can only ever be linked to one Google account at a time. Firestore's
+    // create/update distinction (based on whether the doc already exists)
+    // gives "first claim wins" for free: a second uid's write to an
+    // already-claimed address is evaluated as `update`, which requires the
+    // existing owner's uid to match the requester — so it fails cleanly.
+    match /addressOwners/{address} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+      allow update: if request.auth != null
+                    && resource.data.uid == request.auth.uid
+                    && request.resource.data.uid == request.auth.uid;
+      allow delete: if request.auth != null
+                    && resource.data.uid == request.auth.uid;
+    }
+  }
+}

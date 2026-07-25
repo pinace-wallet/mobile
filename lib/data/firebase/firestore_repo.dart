@@ -13,6 +13,7 @@ class FirestoreRepo {
   FirestoreRepo(this._uid);
 
   final String _uid;
+  String get uid => _uid;
   // Project's Firestore database is named "pinace-wallet", not the special
   // "(default)" id that FirebaseFirestore.instance targets.
   final _db = FirebaseFirestore.instanceFor(
@@ -22,6 +23,22 @@ class FirestoreRepo {
 
   DocumentReference<Map<String, dynamic>> get _userDoc =>
       _db.collection('users').doc(_uid);
+
+  /// Claims `address` for this uid in the global `addressOwners` registry.
+  /// Throws [FirebaseException] with code `permission-denied` if the
+  /// address is already claimed by a different uid (see firestore.rules).
+  Future<void> claimAddress(String address) async {
+    await _db.collection('addressOwners').doc(address).set({
+      'uid': _uid,
+      'claimedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+  }
+
+  /// The uid that currently owns `address`, or null if unclaimed.
+  Future<String?> addressOwnerUid(String address) async {
+    final snap = await _db.collection('addressOwners').doc(address).get();
+    return snap.data()?['uid'] as String?;
+  }
 
   Future<void> ensureUserDoc(User user) async {
     await _userDoc.set({

@@ -123,6 +123,23 @@ class AccountsNotifier extends AsyncNotifier<AccountsState> {
   }
 
   Future<WalletAccount> importAccount(String key, {String? name}) async {
+    final repo = ref.read(firestoreRepoProvider);
+    if (repo != null) {
+      try {
+        final address = WalletKeystore.previewAddress(key);
+        final ownerUid = await repo.addressOwnerUid(address);
+        if (ownerUid != null && ownerUid != repo.uid) {
+          throw StateError(
+              'This address is already linked to a different Google account.');
+        }
+      } on StateError {
+        rethrow;
+      } catch (_) {
+        // Preview/lookup failure (bad key format, offline, etc.) — let the
+        // real import below surface the actual error, or proceed and let
+        // the post-hoc sync fail silently as usual.
+      }
+    }
     final account = await _keystore.importAccount(key, name: name);
     await _keystore.setActiveAccountId(account.id);
     await _syncToFirestore(account);
@@ -163,12 +180,25 @@ class AccountsNotifier extends AsyncNotifier<AccountsState> {
   }
 
   Future<void> _syncToFirestore(WalletAccount account) async {
+    final repo = ref.read(firestoreRepoProvider);
+    if (repo == null) return;
     try {
-      await ref.read(firestoreRepoProvider)?.upsertAccount(
-            accountId: account.address,
-            name: account.name,
-            address: account.address,
-          );
+      await repo.claimAddress(account.address);
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        throw StateError(
+            'This address is already linked to a different Google account.');
+      }
+      return; // offline/other Firestore error — non-fatal
+    } catch (_) {
+      return; // offline — non-fatal
+    }
+    try {
+      await repo.upsertAccount(
+        accountId: account.address,
+        name: account.name,
+        address: account.address,
+      );
     } catch (_) {/* offline is fine */}
   }
 }
